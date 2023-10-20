@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ReportPortal API Smoke tests" verbose="0" parallel="false" >
+
+    <suite-files>
+        <suite-file path="regression-api.xml"/>
+    </suite-files>
+
+    <groups>
+        <run>
+            <include name="smoke"/>
+        </run>
+    </groups>
+
+    <listeners>
+    </listeners>
+</suite>
