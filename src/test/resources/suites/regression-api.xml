@@ -4,7 +4,7 @@
 
     <test name="UserFilterController API tests">
         <packages>
-            <package name="tests.api.filters*."/>
+            <package name="rp.testing.tests.api.filters.*"/>
         </packages>
     </test>
 

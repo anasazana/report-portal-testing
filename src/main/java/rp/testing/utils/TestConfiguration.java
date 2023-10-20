@@ -28,6 +28,14 @@ public class TestConfiguration {
         return PROPERTIES.getProperty("rpUrl");
     }
 
+    public static String rpUsername() {
+        return PROPERTIES.getProperty("rpUsername");
+    }
+
+    public static String rpPassword() {
+        return PROPERTIES.getProperty("rpPassword");
+    }
+
     public static String gridUrl() {
         return PROPERTIES.getProperty("gridUrl");
     }
