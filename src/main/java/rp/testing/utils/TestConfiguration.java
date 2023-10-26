@@ -24,16 +24,32 @@ public class TestConfiguration {
         return PROPERTIES.getProperty("browserName").toUpperCase();
     }
 
-    public static String rpBaseUrl() {
+    public static String baseUrl() {
         return PROPERTIES.getProperty("rpUrl");
     }
 
-    public static String rpUsername() {
+    public static String username() {
         return PROPERTIES.getProperty("rpUsername");
     }
 
-    public static String rpPassword() {
+    public static String password() {
         return PROPERTIES.getProperty("rpPassword");
+    }
+
+    public static String projectName() {
+        return PROPERTIES.getProperty("projectName");
+    }
+
+    public static String projectUrl() {
+        return baseUrl() + "ui/#" + projectName();
+    }
+
+    public static String launchesPageUrl() {
+        return projectUrl() + PROPERTIES.getProperty("launchesUri");
+    }
+
+    public static String filtersPageUrl() {
+        return projectUrl() + PROPERTIES.getProperty("filtersUri");
     }
 
     public static String gridUrl() {

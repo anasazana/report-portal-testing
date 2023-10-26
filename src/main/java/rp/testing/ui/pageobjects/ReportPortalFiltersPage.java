@@ -1,10 +1,13 @@
 package rp.testing.ui.pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import rp.testing.ui.pageobjects.basepageobjects.ReportPortalBasePage;
+import rp.testing.utils.TestConfiguration;
 
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class ReportPortalFiltersPage extends ReportPortalBasePage {
     private WebElement headerLabel;
     @FindBy(className = "inputSearch__input--3e4db type-text")
     private WebElement searchField;
-    @FindBy(className = "ghostButton__ghost-button--1PhF7 ghostButton__color-topaz--2GTla with-icon ghostButton__filled-icon--bHBq5 ghostButton__mobile-minified--1m7Pj")
+    @FindBy(xpath = "//span[@class='ghostButton__text--SjHtK']")
     private WebElement addFilterButton;
     @FindBy(className = "headerCell__title-short--3_s1A")
     private List<WebElement> resultsTableColumns;
@@ -31,6 +34,14 @@ public class ReportPortalFiltersPage extends ReportPortalBasePage {
         return new ReportPortalFiltersPage(webDriver);
     }
 
+    public ReportPortalFiltersPage launch() {
+        driver.get(TestConfiguration.filtersPageUrl());
+        new WebDriverWait(driver, 60).until(
+                wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
+        );
+        return this;
+    }
+
     public String getHeaderLabelText() {
         return headerLabel.getText();
     }
@@ -38,7 +49,7 @@ public class ReportPortalFiltersPage extends ReportPortalBasePage {
     public void searchByName(String searchByName) {
         searchField.click();
         searchField.sendKeys(searchByName);
-        filterSearchResults = webDriver.findElements(searchResults);
+        filterSearchResults = driver.findElements(searchResults);
     }
 
     public List<WebElement> getSearchResults() {
