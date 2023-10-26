@@ -112,6 +112,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
         } catch (Exception e) {
             filteredResults = new ArrayList<>();
         }
+        return filteredResults;
     }
 
 }
