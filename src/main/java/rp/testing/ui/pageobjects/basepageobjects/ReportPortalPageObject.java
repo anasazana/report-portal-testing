@@ -5,10 +5,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public abstract class ReportPortalPageObject {
 
-    protected final WebDriver webDriver;
+    protected final WebDriver driver;
 
-    protected ReportPortalPageObject(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
+    protected ReportPortalPageObject(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 }

@@ -2,16 +2,21 @@ package rp.testing.ui.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import rp.testing.ui.pageobjects.basepageobjects.ReportPortalPageObject;
+import rp.testing.utils.TestConfiguration;
+import rp.testing.utils.WaiterUtils;
 
 public class ReportPortalLoginPage extends ReportPortalPageObject {
 
-    @FindBy(xpath = "//input[@placeholder='Login']")
+    @FindBy(xpath = "//input[@class='inputOutside__input--Ad7Xu' and @name='login']")
     private WebElement usernameTextField;
-    @FindBy(xpath = "//input[@placeholder='Password']")
+    @FindBy(xpath = "//input[@class='inputOutside__input--Ad7Xu' and @name='password']")
     private WebElement passwordTextField;
-    @FindBy(xpath = "//button[@class='bigButton__big-button--ivY7j bigButton__rounded-corners--3wKBL bigButton__color-organish--4iYXy' and text() = 'Login']")
+    @FindBy(xpath = "//button[text() = 'Login']")
     private WebElement loginButton;
 
     private ReportPortalLoginPage(WebDriver webDriver) {
@@ -22,10 +27,21 @@ public class ReportPortalLoginPage extends ReportPortalPageObject {
         return new ReportPortalLoginPage(webDriver);
     }
 
+    public ReportPortalLoginPage launch() {
+        driver.get(TestConfiguration.baseUrl());
+        WaiterUtils.waitForPageToBeLoadedJs(driver, 30);
+        WaiterUtils.pause();
+        return this;
+    }
+
     public void login(String username, String password) {
-        usernameTextField.sendKeys(username);
-        passwordTextField.sendKeys(password);
-        loginButton.click();
+        new WebDriverWait(driver, 60)
+                .until(ExpectedConditions.visibilityOfAllElements(usernameTextField, passwordTextField, loginButton));
+        new Actions(driver)
+                .sendKeys(usernameTextField, username)
+                .sendKeys(passwordTextField, password)
+                .click(loginButton)
+                .build().perform();
     }
 
 }
