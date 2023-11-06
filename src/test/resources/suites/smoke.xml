@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ReportPortal Smoke tests" verbose="0" parallel="false" >
+
+    <suite-files>
+        <suite-file path="smoke-api.xml"/>
+        <suite-file path="smoke-ui.xml"/>
+    </suite-files>
+
+    <listeners>
+    </listeners>
+</suite>
