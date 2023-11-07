@@ -44,4 +44,13 @@ public class ReportPortalLoginPage extends ReportPortalPageObject {
                 .build().perform();
     }
 
+    public boolean isLoggedIn() {
+        try {
+            new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(loginButton));
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
+
 }

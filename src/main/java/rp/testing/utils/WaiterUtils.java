@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaiterUtils {
 
-    private static final long PAUSE_MS = 1000;
+    private static final long PAUSE_MS = 700;
 
     public static void pause() {
         try {

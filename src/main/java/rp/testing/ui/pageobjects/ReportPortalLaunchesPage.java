@@ -44,7 +44,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
     }
 
     public ReportPortalLaunchesPage launch() {
-        driver.get(TestConfiguration.launchesPageUrl());
+        driver.navigate().to(TestConfiguration.launchesPageUrl());
         WaiterUtils.waitForPageToBeLoadedJs(driver, 60);
         return this;
     }
@@ -78,7 +78,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
         }
     }
 
-    public ReportPortalLaunchesPage filterByLaunchNumber(FilterParameterCondition condition, String launchNumber) {
+    public ReportPortalLaunchesPage filterByLaunchNumber(FilterParameterCondition condition, int launchNumber) {
         new WebDriverWait(driver, 30)
                 .until(ExpectedConditions.visibilityOfAllElements(selectedFilterParameterItems));
         WaiterUtils.pause();
@@ -97,7 +97,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
         launchNumberFilter.findElement(By.xpath(String.format("//div[@class='inputConditional__conditions-list--wU03a inputConditional__visible--HwiD9']/div[text()='%s']", condition.getDropdownName()))).click();
         WaiterUtils.pause();
 
-        launchNumberFilter.findElement(launchNumberTextField).sendKeys(launchNumber);
+        launchNumberFilter.findElement(launchNumberTextField).sendKeys(Integer.toString(launchNumber));
 
         return this;
     }
@@ -107,7 +107,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
         WaiterUtils.waitForPageToBeLoadedJs(driver, 30);
         try {
             filteredResults = driver.findElements(By.className("gridRow__grid-row-wrapper--xj8DG"));
-            new WebDriverWait(driver, 10)
+            new WebDriverWait(driver, 3)
                     .until(ExpectedConditions.visibilityOfAllElements(filteredResults));
         } catch (Exception e) {
             filteredResults = new ArrayList<>();
