@@ -11,6 +11,8 @@
     <properties>
         <assertj.version>3.24.2</assertj.version>
         <awaitility.version>4.2.0</awaitility.version>
+        <cucumber.version>7.14.0</cucumber.version>
+        <cucumber-parallel-plugin.version>2.1.0</cucumber-parallel-plugin.version>
         <jackson.version>2.15.3</jackson.version>
         <junit.version>5.10.0</junit.version>
         <reportportal.version>5.3.1</reportportal.version>
@@ -18,6 +20,7 @@
         <selenium.version>3.141.59</selenium.version>
         <testng.version>7.7.1</testng.version>
         <webdrivermanager.version>5.4.1</webdrivermanager.version>
+        <slf4j.version>2.0.4</slf4j.version>
     </properties>
 
     <dependencies>
@@ -55,6 +58,12 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.epam.reportportal</groupId>
@@ -65,6 +74,22 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.8.1</version>
         </dependency>
     </dependencies>
     <build>
@@ -82,6 +107,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.junit-platform.naming-strategy=long
+                        </configurationParameters>
+                    </properties>
+                    <reuseForks>false</reuseForks>
+                    <includes>
+                        <include>rp/testing/bdd/ReportPortalFiltersTestRunner.class</include>
+                    </includes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -30,11 +30,10 @@ public class FilterLaunchesByNumberTest extends ReportPortalBaseTest {
 
     @Test(groups = {SMOKE}, dataProvider = "launchNumberDataProvider",
             description = "Filter launches by number: equal to")
-    public void filterByLaunchNumberEquals(String launchNumber) {
+    public void filterByLaunchNumberEquals(int launchNumber) {
         launchesPage.selectFilterParameters(FilterParameter.LAUNCH_NUMBER);
         launchesPage.filterByLaunchNumber(FilterParameterCondition.EQUALS, launchNumber);
-        int launchNum = Integer.parseInt(launchNumber);
-        boolean isNumberOutOfRange = 1 > launchNum || launchNum > 5;
+        boolean isNumberOutOfRange = 1 > launchNumber || launchNumber > 5;
         List<WebElement> filteredLaunches = getFilteredLaunches(isNumberOutOfRange ? 0 : 1);
         FilteredLaunchesValidator.validateLaunchNumbers(
                 FilterParameterCondition.EQUALS,
@@ -45,11 +44,10 @@ public class FilterLaunchesByNumberTest extends ReportPortalBaseTest {
 
     @Test(groups = {SMOKE}, dataProvider = "launchNumberDataProvider",
             description = "Filter launches by number: less than or equal to")
-    public void filterByLaunchNumberLessThanOrEquals(String launchNumber) {
+    public void filterByLaunchNumberLessThanOrEquals(int launchNumber) {
         launchesPage.selectFilterParameters(FilterParameter.LAUNCH_NUMBER);
         launchesPage.filterByLaunchNumber(FilterParameterCondition.LESS_THAN_OR_EQUAL, launchNumber);
-        int launchNum = Integer.parseInt(launchNumber);
-        int expectedNumberOfLaunches = Math.min(launchNum, 5);
+        int expectedNumberOfLaunches = Math.min(launchNumber, 5);
         List<WebElement> filteredLaunches = getFilteredLaunches(expectedNumberOfLaunches);
         FilteredLaunchesValidator.validateLaunchNumbers(
                 FilterParameterCondition.LESS_THAN_OR_EQUAL,
@@ -60,11 +58,10 @@ public class FilterLaunchesByNumberTest extends ReportPortalBaseTest {
 
     @Test(groups = {SMOKE}, dataProvider = "launchNumberWithExpectedResultDataProvider",
             description = "Filter launches by number: greater than or equal to")
-    public void filterByLaunchNumberGreaterThanOrEquals(String launchNumber, String expectedNumberOfLaunches) {
+    public void filterByLaunchNumberGreaterThanOrEquals(int launchNumber, int expectedNumberOfLaunches) {
         launchesPage.selectFilterParameters(FilterParameter.LAUNCH_NUMBER);
         launchesPage.filterByLaunchNumber(FilterParameterCondition.GREATER_THAN_OR_EQUAL, launchNumber);
-        int expectedLaunches = Integer.parseInt(expectedNumberOfLaunches);
-        List<WebElement> filteredLaunches = getFilteredLaunches(expectedLaunches);
+        List<WebElement> filteredLaunches = getFilteredLaunches(expectedNumberOfLaunches);
         FilteredLaunchesValidator.validateLaunchNumbers(
                 FilterParameterCondition.GREATER_THAN_OR_EQUAL,
                 filteredLaunches,
@@ -92,12 +89,12 @@ public class FilterLaunchesByNumberTest extends ReportPortalBaseTest {
 
     @DataProvider
     private Object[][] launchNumberDataProvider() {
-        return new Object[][]{{"0"}, {"1"}, {"3"}, {"5"}, {"6"}};
+        return new Object[][]{{0}, {1}, {3}, {5}, {6}};
     }
 
     @DataProvider
     private Object[][] launchNumberWithExpectedResultDataProvider() {
-        return new Object[][]{{"0", "5"}, {"1", "5"}, {"3", "3"}, {"5", "1"}, {"6", "0"}};
+        return new Object[][]{{0, 5}, {1, 5}, {3, 3}, {5, 1}, {6, 0}};
     }
 
 }
