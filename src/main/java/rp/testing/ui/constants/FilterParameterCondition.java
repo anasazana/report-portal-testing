@@ -1,5 +1,7 @@
 package rp.testing.ui.constants;
 
+import java.util.Arrays;
+
 public enum FilterParameterCondition {
 
     CONTAINS("cnt", "Contains"),
@@ -27,6 +29,12 @@ public enum FilterParameterCondition {
 
     public String getDropdownName() {
         return dropdownName;
+    }
+
+    public static FilterParameterCondition getByName(String conditionName) {
+        return Arrays.stream(FilterParameterCondition.values())
+                .filter(condition -> condition.getDropdownName().equalsIgnoreCase(conditionName))
+                .findFirst().get();
     }
 
 }
