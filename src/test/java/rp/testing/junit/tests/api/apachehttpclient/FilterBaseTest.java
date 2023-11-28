@@ -1,4 +1,4 @@
-package rp.testing.junit.tests.api;
+package rp.testing.junit.tests.api.apachehttpclient;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

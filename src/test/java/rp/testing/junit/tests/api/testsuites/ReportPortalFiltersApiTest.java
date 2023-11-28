@@ -6,6 +6,9 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("junit-jupiter")
-@SelectPackages({"rp.testing.junit.tests.api"})
+@SelectPackages({
+        "rp.testing.junit.tests.api.apachehttpclient",
+        "rp.testing.junit.tests.api.newclient"
+})
 public class ReportPortalFiltersApiTest {
 }

@@ -1,4 +1,4 @@
-package rp.testing.junit.tests.api;
+package rp.testing.junit.tests.api.apachehttpclient;
 
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
@@ -8,42 +8,44 @@ import org.junit.platform.suite.api.IncludeEngines;
 import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
+import rp.testing.api.model.filter.UpdateUserFilterRQ;
+import rp.testing.api.model.filter.UserFilterBatch;
 
 import java.io.IOException;
 
 import static rp.testing.utils.TestConfiguration.projectName;
 
 @IncludeEngines("junit-jupiter")
-public class DeleteFilterTest extends FilterBaseTest {
+public class GetFilterTest extends FilterBaseTest {
 
     @Test
-    @DisplayName("Delete an existing filter, 200 status code should be returned")
-    public void deleteExistingFilterTest() throws IOException {
-        EntryCreatedRS responseBody = client.createFilter(FilterGenerator.generateTestFilter())
-                .validateStatusCode(HttpStatus.SC_CREATED)
-                .getBodyAsObject(EntryCreatedRS.class);
-        client.getFilterById(responseBody.getId())
-                .validateStatusCode(HttpStatus.SC_OK);
-
-        OperationCompletionRS response = client.deleteFilterById(responseBody.getId())
+    @DisplayName("GET all filters request should return all existing filters")
+    public void getAllFiltersTest() throws IOException {
+        UserFilterBatch getAllResponse = client.getFilters()
                 .validateStatusCode(HttpStatus.SC_OK)
-                .getBodyAsObject(OperationCompletionRS.class);
-        Assertions.assertEquals(response.getMessage(),
-                String.format("User filter with ID = '%s' successfully deleted.", responseBody.getId())
-        );
-
-        client.getFilterById(responseBody.getId())
-                .validateStatusCode(HttpStatus.SC_NOT_FOUND);
+                .getBodyAsObject(UserFilterBatch.class);
+        Assertions.assertFalse(getAllResponse.getContent().isEmpty());
     }
 
     @Test
-    @DisplayName("Delete a non-existent filter, 404 status code should be returned")
+    @DisplayName("Get an existing filter, 200 status code should be returned")
+    public void getExistingFilterTest() throws IOException {
+        UpdateUserFilterRQ testFilter = FilterGenerator.generateTestFilter();
+        EntryCreatedRS responseBody = client.createFilter(testFilter)
+                .validateStatusCode(HttpStatus.SC_CREATED)
+                .getBodyAsObject(EntryCreatedRS.class);
+        testFilter.setId(responseBody.getId());
+
+        client.getFilterById(testFilter.getId())
+                .validateStatusCode(HttpStatus.SC_OK)
+                .validateResponseBodyEquals(testFilter);
+    }
+
+    @Test
+    @DisplayName("Get a non-existent filter, 404 status code should be returned")
     public void getNonExistentFilterTest() throws IOException {
         String nonExistentId = "99999";
-        client.getFilterById(nonExistentId)
-                .validateStatusCode(HttpStatus.SC_NOT_FOUND);
-
-        OperationCompletionRS response = client.deleteFilterById(nonExistentId)
+        OperationCompletionRS response = client.getFilterById(nonExistentId)
                 .validateStatusCode(HttpStatus.SC_NOT_FOUND)
                 .getBodyAsObject(OperationCompletionRS.class);
 
