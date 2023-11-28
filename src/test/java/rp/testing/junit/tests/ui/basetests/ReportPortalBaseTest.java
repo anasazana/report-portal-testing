@@ -1,4 +1,4 @@
-package rp.testing.junit.tests.basetests;
+package rp.testing.junit.tests.ui.basetests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
