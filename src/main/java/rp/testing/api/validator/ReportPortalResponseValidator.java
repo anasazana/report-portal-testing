@@ -8,8 +8,8 @@ import rp.testing.utils.JsonUtils;
 @Slf4j
 public class ReportPortalResponseValidator {
 
-    private String responseBody;
-    private int statusCode;
+    private final String responseBody;
+    private final int statusCode;
 
     public ReportPortalResponseValidator(String responseBody, int statusCode) {
         this.responseBody = responseBody;
