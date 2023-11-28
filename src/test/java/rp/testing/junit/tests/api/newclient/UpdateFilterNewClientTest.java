@@ -10,7 +10,6 @@ import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
 import rp.testing.api.model.filter.UpdateUserFilterRQ;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static rp.testing.utils.TestConfiguration.projectName;
 
 @IncludeEngines("junit-jupiter")
@@ -21,22 +20,21 @@ public class UpdateFilterNewClientTest extends FilterNewClientBaseTest {
     public void updateFilterTest() {
         UpdateUserFilterRQ testRecord = FilterGenerator.generateTestFilter();
         EntryCreatedRS responseBody = client.createFilter(testRecord)
-                .assertThat().statusCode(HttpStatus.SC_CREATED)
-                .extract().body().as(EntryCreatedRS.class);
+                .validateStatusCode(HttpStatus.SC_CREATED)
+                .getBodyAsObject(EntryCreatedRS.class);
         testRecord.setId(responseBody.getId());
         testRecord.setName(testRecord.getName() + "-updated");
 
         OperationCompletionRS response = client.updateFilterById(testRecord.getId(), testRecord)
-                .assertThat().statusCode(HttpStatus.SC_OK)
-                .extract().body().as(OperationCompletionRS.class);
+                .validateStatusCode(HttpStatus.SC_OK)
+                .getBodyAsObject(OperationCompletionRS.class);
         Assertions.assertEquals(response.getMessage(),
                 String.format("User filter with ID = '%s' successfully updated.", responseBody.getId())
         );
 
-        UpdateUserFilterRQ actualFilter = client.getFilterById(testRecord.getId())
-                .assertThat().statusCode(HttpStatus.SC_OK)
-                .extract().body().as(UpdateUserFilterRQ.class);
-        assertThat(actualFilter).usingRecursiveComparison().isEqualTo(testRecord);
+        client.getFilterById(testRecord.getId())
+                .validateStatusCode(HttpStatus.SC_OK)
+                .validateResponseBodyEquals(testRecord);
     }
 
     @Test
@@ -44,11 +42,11 @@ public class UpdateFilterNewClientTest extends FilterNewClientBaseTest {
     public void updateNonExistentFilterTest() {
         String nonExistentId = "99999";
         client.getFilterById(nonExistentId)
-                .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
+                .validateStatusCode(HttpStatus.SC_NOT_FOUND);
 
         OperationCompletionRS response = client.updateFilterById(nonExistentId, FilterGenerator.generateTestFilter())
-                .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
-                .extract().body().as(OperationCompletionRS.class);
+                .validateStatusCode(HttpStatus.SC_NOT_FOUND)
+                .getBodyAsObject(OperationCompletionRS.class);
 
         Assertions.assertEquals(response.getErrorCode(), 40421);
         Assertions.assertEquals(response.getMessage(), String.format(

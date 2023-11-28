@@ -1,10 +1,10 @@
 package rp.testing.api.client.newclient;
 
-import io.restassured.response.ValidatableResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import rp.testing.api.model.filter.UpdateUserFilterRQ;
 import rp.testing.api.model.filter.enums.RequestParameter;
+import rp.testing.api.validator.newvalidator.ReportPortalNewResponseValidator;
 import rp.testing.utils.JsonUtils;
 
 import java.util.HashMap;
@@ -21,28 +21,28 @@ public class ReportPortalFiltersNewClient extends ReportPortalNewServiceClient {
         super(projectName() + FILTER);
     }
 
-    public ValidatableResponse getFilters() {
+    public ReportPortalNewResponseValidator getFilters() {
         return getFiltersWithParameters(new HashMap<>());
     }
 
-    public ValidatableResponse getFiltersWithParameters(Map<RequestParameter, String> requestParameters) {
+    public ReportPortalNewResponseValidator getFiltersWithParameters(Map<RequestParameter, String> requestParameters) {
         return get(getParametersString(requestParameters));
     }
 
-    public ValidatableResponse getFilterById(String filterId) {
+    public ReportPortalNewResponseValidator getFilterById(String filterId) {
         return get(filterId);
     }
 
-    public ValidatableResponse createFilter(UpdateUserFilterRQ newFilter) {
+    public ReportPortalNewResponseValidator createFilter(UpdateUserFilterRQ newFilter) {
         return post(StringUtils.EMPTY, JsonUtils.asPrettyJsonString(newFilter));
     }
 
-    public ValidatableResponse updateFilterById(String filterId,
+    public ReportPortalNewResponseValidator updateFilterById(String filterId,
                                                 UpdateUserFilterRQ updatedFilter) {
         return put(filterId, JsonUtils.asPrettyJsonString(updatedFilter));
     }
 
-    public ValidatableResponse deleteFilterById(String filterId) {
+    public ReportPortalNewResponseValidator deleteFilterById(String filterId) {
         return delete(filterId);
     }
 

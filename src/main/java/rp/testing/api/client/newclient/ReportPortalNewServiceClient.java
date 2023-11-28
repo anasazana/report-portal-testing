@@ -2,10 +2,10 @@ package rp.testing.api.client.newclient;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.response.ValidatableResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
 import rp.testing.api.model.filter.enums.RequestParameter;
+import rp.testing.api.validator.newvalidator.ReportPortalNewResponseValidator;
 
 import java.util.Map;
 
@@ -27,36 +27,44 @@ public abstract class ReportPortalNewServiceClient {
         baseRequestSpec = new RequestSpecBuilder().addHeader(HttpHeaders.AUTHORIZATION, token);
     }
 
-    protected ValidatableResponse get(String url) {
-        return RestAssured.given(baseRequestSpec.build())
-                .log().all()
-                .when().get(url)
-                .then().log().all();
+    protected ReportPortalNewResponseValidator get(String url) {
+        return new ReportPortalNewResponseValidator(
+                RestAssured.given(baseRequestSpec.build())
+                        .log().all()
+                        .when().get(url)
+                        .then().log().all()
+        );
     }
 
-    protected ValidatableResponse post(String url, String requestBody) {
-        return RestAssured.given(baseRequestSpec.build())
-                .contentType(APPLICATION_JSON.getMimeType())
-                .accept(WILDCARD.getMimeType())
-                .body(requestBody)
-                .log().all()
-                .when().post(url).then().log().all();
+    protected ReportPortalNewResponseValidator post(String url, String requestBody) {
+        return new ReportPortalNewResponseValidator(
+                RestAssured.given(baseRequestSpec.build())
+                        .contentType(APPLICATION_JSON.getMimeType())
+                        .accept(WILDCARD.getMimeType())
+                        .body(requestBody)
+                        .log().all()
+                        .when().post(url).then().log().all()
+        );
     }
 
-    protected ValidatableResponse put(String url, String requestBody) {
-        return RestAssured.given(baseRequestSpec.build())
-                .contentType(APPLICATION_JSON.getMimeType())
-                .accept(WILDCARD.getMimeType())
-                .body(requestBody)
-                .log().all()
-                .when().put(url).then().log().all();
+    protected ReportPortalNewResponseValidator put(String url, String requestBody) {
+        return new ReportPortalNewResponseValidator(
+                RestAssured.given(baseRequestSpec.build())
+                        .contentType(APPLICATION_JSON.getMimeType())
+                        .accept(WILDCARD.getMimeType())
+                        .body(requestBody)
+                        .log().all()
+                        .when().put(url).then().log().all()
+        );
     }
 
-    protected ValidatableResponse delete(String url) {
-        return RestAssured.given(baseRequestSpec.build())
-                .accept(WILDCARD.getMimeType())
-                .log().all()
-                .when().delete(url).then().log().all();
+    protected ReportPortalNewResponseValidator delete(String url) {
+        return new ReportPortalNewResponseValidator(
+                RestAssured.given(baseRequestSpec.build())
+                        .accept(WILDCARD.getMimeType())
+                        .log().all()
+                        .when().delete(url).then().log().all()
+        );
     }
 
     protected String getParametersString(Map<RequestParameter, String> requestParameters) {
