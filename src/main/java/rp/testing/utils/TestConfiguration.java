@@ -36,8 +36,15 @@ public class TestConfiguration {
         return PROPERTIES.getProperty("rpPassword");
     }
 
+    public static String token() {
+        return PROPERTIES.getProperty("rpToken");
+    }
+
     public static String projectName() {
         return PROPERTIES.getProperty("projectName");
+    }
+    public static String apiBaseUrl() {
+        return baseUrl() + "api/v1/";
     }
 
     public static String projectUrl() {

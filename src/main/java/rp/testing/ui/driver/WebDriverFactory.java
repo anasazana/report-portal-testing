@@ -1,18 +1,16 @@
 package rp.testing.ui.driver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import rp.testing.utils.TestConfiguration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Slf4j
 public class WebDriverFactory {
-
-    final static Logger logger = LoggerFactory.getLogger(WebDriverFactory.class);
 
     public static WebDriver createInstance(String browserName) {
         WebDriver webdriver = null;
@@ -25,7 +23,7 @@ public class WebDriverFactory {
                 webdriver = createRemoteInstance(BrowserFactory.valueOf(browserName).getOptions());
                 break;
             default:
-                logger.error("Wrong run mode! Available: LOCAL, REMOTE");
+                log.error("Wrong run mode! Available: LOCAL, REMOTE");
         }
 
         return webdriver;
@@ -36,10 +34,10 @@ public class WebDriverFactory {
         try {
             remoteWebDriver = new RemoteWebDriver(new URL(TestConfiguration.gridUrl()), capability);
         } catch (MalformedURLException e) {
-            logger.error("Grid URL is invalid or Grid is not available");
-            logger.error(String.format("Browser: %s", capability.getBrowserName()), e);
+            log.error("Grid URL is invalid or Grid is not available");
+            log.error(String.format("Browser: %s", capability.getBrowserName()), e);
         } catch (IllegalArgumentException e) {
-            logger.error(String.format("Browser %s is not valid or recognized", capability.getBrowserName()), e);
+            log.error(String.format("Browser %s is not valid or recognized", capability.getBrowserName()), e);
         }
 
         return remoteWebDriver;

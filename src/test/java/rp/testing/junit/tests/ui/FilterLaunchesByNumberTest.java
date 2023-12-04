@@ -1,4 +1,4 @@
-package rp.testing.junit.tests;
+package rp.testing.junit.tests.ui;
 
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebElement;
-import rp.testing.junit.tests.basetests.ReportPortalBaseTest;
+import rp.testing.junit.tests.ui.basetests.ReportPortalBaseTest;
 import rp.testing.ui.constants.FilterParameter;
 import rp.testing.ui.constants.FilterParameterCondition;
 import rp.testing.ui.pageobjects.ReportPortalLaunchesPage;

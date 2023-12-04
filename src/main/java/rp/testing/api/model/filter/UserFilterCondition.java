@@ -1,14 +1,22 @@
 package rp.testing.api.model.filter;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class UserFilterCondition {
 
-    @JsonProperty
     private String filteringField;
-    @JsonProperty
     private String condition;
-    @JsonProperty
     private String value;
 
 }
