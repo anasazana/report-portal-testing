@@ -10,6 +10,8 @@ import rp.testing.ui.pageobjects.basepageobjects.ReportPortalPageObject;
 import rp.testing.utils.TestConfiguration;
 import rp.testing.utils.WaiterUtils;
 
+import java.time.Duration;
+
 public class ReportPortalLoginPage extends ReportPortalPageObject {
 
     @FindBy(xpath = "//input[@class='inputOutside__input--Ad7Xu' and @name='login']")
@@ -29,13 +31,13 @@ public class ReportPortalLoginPage extends ReportPortalPageObject {
 
     public ReportPortalLoginPage launch() {
         driver.get(TestConfiguration.baseUrl());
-        WaiterUtils.waitForPageToBeLoadedJs(driver, 30);
+        WaiterUtils.waitForPageToBeLoadedJs(driver, WaiterUtils.TIMEOUT_30_S);
         WaiterUtils.pause();
         return this;
     }
 
     public void login(String username, String password) {
-        new WebDriverWait(driver, 60)
+        new WebDriverWait(driver, WaiterUtils.TIMEOUT_60_S)
                 .until(ExpectedConditions.visibilityOfAllElements(usernameTextField, passwordTextField, loginButton));
         new Actions(driver)
                 .sendKeys(usernameTextField, username)
@@ -46,7 +48,7 @@ public class ReportPortalLoginPage extends ReportPortalPageObject {
 
     public boolean isLoggedIn() {
         try {
-            new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(loginButton));
+            new WebDriverWait(driver, Duration.ofSeconds(2)).until(ExpectedConditions.visibilityOf(loginButton));
         } catch (Exception e) {
             return true;
         }

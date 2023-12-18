@@ -7,6 +7,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import rp.testing.ui.constants.FilterParameter;
 import rp.testing.ui.constants.FilterParameterCondition;
 import rp.testing.ui.pageobjects.basepageobjects.ReportPortalBasePage;
 import rp.testing.utils.TestConfiguration;
@@ -14,8 +15,6 @@ import rp.testing.utils.WaiterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static rp.testing.ui.constants.FilterParameter.LAUNCH_NUMBER;
 
 public class ReportPortalLaunchesPage extends ReportPortalBasePage {
 
@@ -45,12 +44,12 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
 
     public ReportPortalLaunchesPage launch() {
         driver.navigate().to(TestConfiguration.launchesPageUrl());
-        WaiterUtils.waitForPageToBeLoadedJs(driver, 60);
+        WaiterUtils.waitForPageToBeLoadedJs(driver, WaiterUtils.TIMEOUT_60_S);
         return this;
     }
 
     public ReportPortalLaunchesPage clickAddFilterButton() {
-        new WebDriverWait(driver, 30)
+        new WebDriverWait(driver, WaiterUtils.TIMEOUT_30_S)
                 .until(ExpectedConditions.visibilityOf(addFilterButton));
         new Actions(driver)
                 .moveToElement(addFilterButton)
@@ -60,10 +59,10 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
     }
 
     public void selectFilterParameters(String... filterParameterNames) {
-        WaiterUtils.waitForPageToBeLoadedJs(driver, 60);
+        WaiterUtils.waitForPageToBeLoadedJs(driver, WaiterUtils.TIMEOUT_60_S);
         WaiterUtils.pause();
         for (String filterParameterName : filterParameterNames) {
-            new WebDriverWait(driver, 60)
+            new WebDriverWait(driver, WaiterUtils.TIMEOUT_60_S)
                     .until(ExpectedConditions.visibilityOf(filterParametersDropdownButton));
             filterParametersDropdownButton.click();
             WaiterUtils.pause();
@@ -79,7 +78,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
     }
 
     public ReportPortalLaunchesPage filterByLaunchNumber(FilterParameterCondition condition, int launchNumber) {
-        new WebDriverWait(driver, 30)
+        new WebDriverWait(driver, WaiterUtils.TIMEOUT_30_S)
                 .until(ExpectedConditions.visibilityOfAllElements(selectedFilterParameterItems));
         WaiterUtils.pause();
 
@@ -87,7 +86,7 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
                 .filter(filterItem -> filterItem
                         .findElement(selectedParameterNameLabel)
                         .getText()
-                        .equals(LAUNCH_NUMBER)
+                        .equals(FilterParameter.LAUNCH_NUMBER)
                 ).findFirst().get();
         WaiterUtils.pause();
 
@@ -104,10 +103,10 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
 
     public List<WebElement> getFilteredResults() {
         driver.switchTo().defaultContent();
-        WaiterUtils.waitForPageToBeLoadedJs(driver, 30);
+        WaiterUtils.waitForPageToBeLoadedJs(driver, WaiterUtils.TIMEOUT_30_S);
         try {
             filteredResults = driver.findElements(By.className("gridRow__grid-row-wrapper--xj8DG"));
-            new WebDriverWait(driver, 3)
+            new WebDriverWait(driver, WaiterUtils.TIMEOUT_30_S)
                     .until(ExpectedConditions.visibilityOfAllElements(filteredResults));
         } catch (Exception e) {
             filteredResults = new ArrayList<>();

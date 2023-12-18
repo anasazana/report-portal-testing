@@ -2,13 +2,11 @@ package rp.testing.api.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
-import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.util.EntityUtils;
 import rp.testing.api.model.filter.enums.RequestParameter;
 import rp.testing.api.validator.ReportPortalResponseValidator;
@@ -31,10 +29,10 @@ public abstract class ReportPortalServiceClient {
     protected final String token;
 
     protected ReportPortalServiceClient(String url) {
-        HttpHost proxy = new HttpHost("localhost", 8866, "http");
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
+//        HttpHost proxy = new HttpHost("localhost", 8866, "http");
+//        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
         httpClient = HttpClients.custom()
-                .setRoutePlanner(routePlanner)
+//                .setRoutePlanner(routePlanner)
                 .build();
         baseUrl = apiBaseUrl() + url;
         token = "Bearer " + token();
