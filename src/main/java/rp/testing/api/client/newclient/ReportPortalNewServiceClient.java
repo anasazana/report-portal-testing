@@ -22,7 +22,7 @@ public abstract class ReportPortalNewServiceClient {
 
     protected ReportPortalNewServiceClient(String url) {
         RestAssured.baseURI = apiBaseUrl() + url;
-        RestAssured.proxy("localhost", 8866, "http");
+//        RestAssured.proxy("localhost", 8866, "http");
         token = "Bearer " + token();
         baseRequestSpec = new RequestSpecBuilder().addHeader(HttpHeaders.AUTHORIZATION, token);
     }

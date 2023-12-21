@@ -21,7 +21,8 @@
         <lombok.version>1.18.28</lombok.version>
         <reportportal.version>5.3.1</reportportal.version>
         <restassured.version>5.3.0</restassured.version>
-        <selenium.version>3.141.59</selenium.version>
+        <selenide.version>7.0.4</selenide.version>
+        <selenium.version>4.16.1</selenium.version>
         <slf4j.version>2.0.7</slf4j.version>
         <testng.version>7.7.1</testng.version>
         <webdrivermanager.version>5.4.1</webdrivermanager.version>
@@ -64,6 +65,11 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
         </dependency>
         <dependency>
             <groupId>com.epam.reportportal</groupId>
@@ -151,6 +157,7 @@
                     <reuseForks>false</reuseForks>
                     <includes>
                         <include>rp/testing/junit/tests/api/testsuites/ReportPortalFiltersApiTest.class</include>
+                        <include>rp/testing/junit/tests/ui/selenide/suites/ReportPortalFiltersSelenideUITest.class</include>
                         <include>rp/testing/bdd/ReportPortalFiltersTestRunner.class</include>
                     </includes>
                 </configuration>

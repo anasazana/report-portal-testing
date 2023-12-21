@@ -8,11 +8,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
-import rp.testing.utils.TestConfiguration;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import rp.testing.ui.listeners.ReportPortalEventListener;
 
 import java.util.List;
+import java.util.logging.Level;
+
+import static rp.testing.utils.WaiterUtils.TIMEOUT_30_S;
 
 public enum BrowserFactory {
 
@@ -20,12 +24,20 @@ public enum BrowserFactory {
         @Override
         public WebDriver createDriver() {
             WebDriverManager.getInstance(DriverManagerType.CHROME).create();
-            return new ChromeDriver(getOptions());
+            WebDriver baseDriver = new ChromeDriver(getOptions());
+            EventFiringDecorator<WebDriver> eventsDriver = new EventFiringDecorator<>(new ReportPortalEventListener());
+            return eventsDriver.decorate(baseDriver);
         }
 
         @Override
         public ChromeOptions getOptions() {
-            return new ChromeOptions().addArguments(COMMON_OPTIONS).setHeadless(TestConfiguration.headless());
+            LoggingPreferences logging = new LoggingPreferences();
+            logging.enable(LogType.DRIVER, Level.ALL);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments(COMMON_OPTIONS)
+                    .setPageLoadTimeout(TIMEOUT_30_S)
+                    .setCapability(ChromeOptions.LOGGING_PREFS, logging);
+            return options;
         }
     },
     FIREFOX {
@@ -37,19 +49,7 @@ public enum BrowserFactory {
 
         @Override
         public FirefoxOptions getOptions() {
-            return new FirefoxOptions().addArguments(COMMON_OPTIONS).setHeadless(TestConfiguration.headless());
-        }
-    },
-    OPERA {
-        @Override
-        public WebDriver createDriver() {
-            WebDriverManager.getInstance(DriverManagerType.OPERA).create();
-            return new OperaDriver(getOptions());
-        }
-
-        @Override
-        public OperaOptions getOptions() {
-            return new OperaOptions().addArguments(COMMON_OPTIONS).addArguments("-headless");
+            return new FirefoxOptions().addArguments(COMMON_OPTIONS);
         }
     };
 
