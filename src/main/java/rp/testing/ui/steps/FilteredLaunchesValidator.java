@@ -1,5 +1,6 @@
 package rp.testing.ui.steps;
 
+import lombok.experimental.UtilityClass;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,6 +8,7 @@ import rp.testing.ui.constants.FilterParameterCondition;
 
 import java.util.List;
 
+@UtilityClass
 public class FilteredLaunchesValidator {
 
     private static final By LAUNCH_NAME_LABEL = By.xpath("//div[@class='tooltip__tooltip-trigger--FBBdw itemInfo__name--Nz97v']/span");
@@ -34,7 +36,7 @@ public class FilteredLaunchesValidator {
         for (WebElement filteredLaunch : filteredLaunches) {
             String launchNumber = filteredLaunch
                     .findElement(LAUNCH_NUMBER_LABEL)
-                    .getText().replaceAll("#", "");
+                    .getText().replace("#", "");
             boolean isCorrectNumber = false;
             int filteredLaunchNumber = Integer.parseInt(launchNumber);
             switch (condition) {

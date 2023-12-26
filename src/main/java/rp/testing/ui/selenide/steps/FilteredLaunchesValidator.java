@@ -1,12 +1,14 @@
 package rp.testing.ui.selenide.steps;
 
 import com.codeborne.selenide.SelenideElement;
+import lombok.experimental.UtilityClass;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import rp.testing.ui.constants.FilterParameterCondition;
 
 import java.util.List;
 
+@UtilityClass
 public class FilteredLaunchesValidator {
 
     private static final By LAUNCH_NUMBER_LABEL = By.xpath("//span[@class='itemInfo__number--uvCUK']");
@@ -18,7 +20,7 @@ public class FilteredLaunchesValidator {
         for (SelenideElement filteredLaunch : filteredLaunches) {
             String launchNumber = filteredLaunch
                     .findElement(LAUNCH_NUMBER_LABEL)
-                    .getText().replaceAll("#", "");
+                    .getText().replace("#", "");
             boolean isCorrectNumber = false;
             int filteredLaunchNumber = Integer.parseInt(launchNumber);
             switch (condition) {

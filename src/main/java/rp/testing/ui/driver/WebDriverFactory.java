@@ -1,5 +1,6 @@
 package rp.testing.ui.driver;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Slf4j
+@UtilityClass
 public class WebDriverFactory {
 
     public static WebDriver createInstance(String browserName) {

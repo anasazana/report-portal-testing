@@ -26,8 +26,9 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
         OperationCompletionRS response = client.deleteFilterById(responseBody.getId())
                 .validateStatusCode(HttpStatus.SC_OK)
                 .getBodyAsObject(OperationCompletionRS.class);
-        Assertions.assertEquals(response.getMessage(),
-                String.format("User filter with ID = '%s' successfully deleted.", responseBody.getId())
+        Assertions.assertEquals(
+                String.format("User filter with ID = '%s' successfully deleted.", responseBody.getId()),
+                response.getMessage()
         );
 
         client.getFilterById(responseBody.getId())
@@ -45,10 +46,11 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
                 .validateStatusCode(HttpStatus.SC_NOT_FOUND)
                 .getBodyAsObject(OperationCompletionRS.class);
 
-        Assertions.assertEquals(response.getErrorCode(), 40421);
-        Assertions.assertEquals(response.getMessage(), String.format(
+        Assertions.assertEquals(40421, response.getErrorCode());
+        Assertions.assertEquals(String.format(
                 "User filter with ID '%s' not found on project '%s'. Did you use correct User Filter ID?",
-                nonExistentId, projectName())
+                nonExistentId, projectName()),
+                response.getMessage()
         );
     }
 

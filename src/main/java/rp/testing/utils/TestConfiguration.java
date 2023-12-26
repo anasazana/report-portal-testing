@@ -1,11 +1,13 @@
 package rp.testing.utils;
 
+import lombok.experimental.UtilityClass;
 import rp.testing.ui.constants.TestRunMode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@UtilityClass
 public class TestConfiguration {
 
     private static final Properties PROPERTIES;

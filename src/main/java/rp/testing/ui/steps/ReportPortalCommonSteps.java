@@ -1,11 +1,13 @@
 package rp.testing.ui.steps;
 
+import lombok.experimental.UtilityClass;
 import org.openqa.selenium.WebDriver;
 import rp.testing.ui.pageobjects.ReportPortalLoginPage;
 
 import static rp.testing.utils.TestConfiguration.password;
 import static rp.testing.utils.TestConfiguration.username;
 
+@UtilityClass
 public class ReportPortalCommonSteps {
 
     public static void login(WebDriver webDriver) {
