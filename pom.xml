@@ -19,7 +19,7 @@
         <junit-platform.version>1.10.1</junit-platform.version>
         <logback.version>1.3.5</logback.version>
         <lombok.version>1.18.30</lombok.version>
-        <reportportal.version>5.3.1</reportportal.version>
+        <reportportal.version>5.1.6</reportportal.version>
         <restassured.version>5.3.0</restassured.version>
         <selenide.version>7.0.4</selenide.version>
         <selenium.version>4.16.1</selenium.version>
@@ -76,13 +76,12 @@
         <dependency>
             <groupId>com.epam.reportportal</groupId>
             <artifactId>agent-java-junit5</artifactId>
-            <version>5.1.10</version>
-            <scope>test</scope>
+            <version>${reportportal.version}</version>
         </dependency>
         <dependency>
             <groupId>com.epam.reportportal</groupId>
             <artifactId>logger-java-logback</artifactId>
-            <version>5.1.6</version>
+            <version>${reportportal.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -168,7 +167,6 @@
                     <includes>
                         <include>rp/testing/junit/tests/api/testsuites/ReportPortalFiltersApiTest.class</include>
                         <include>rp/testing/junit/tests/ui/selenide/suites/ReportPortalFiltersSelenideUITest.class</include>
-<!--                        <include>rp/testing/bdd/ReportPortalFiltersTestRunner.class</include>-->
                     </includes>
                 </configuration>
             </plugin>
