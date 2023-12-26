@@ -33,6 +33,7 @@ public class CreateFilterNewClientTest extends FilterNewClientBaseTest {
     public void createFilterProvidedIDShouldBeIgnoredTest() {
         UpdateUserFilterRQ testFilter = FilterGenerator.generateTestFilter();
         testFilter.setId("999");
+        client.deleteFilterById(testFilter.getId());
         EntryCreatedRS responseBody = client.createFilter(testFilter)
                 .validateStatusCode(HttpStatus.SC_CREATED)
                 .getBodyAsObject(EntryCreatedRS.class);

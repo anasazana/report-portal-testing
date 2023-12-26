@@ -29,15 +29,15 @@ public class TestConfiguration {
     }
 
     public static String username() {
-        return PROPERTIES.getProperty("rpUsername");
+        return System.getProperty("rpUsername", PROPERTIES.getProperty("rpUsername"));
     }
 
     public static String password() {
-        return PROPERTIES.getProperty("rpPassword");
+        return System.getProperty("rpPassword", PROPERTIES.getProperty("rpPassword"));
     }
 
     public static String token() {
-        return PROPERTIES.getProperty("rpToken");
+        return System.getProperty("rpToken", PROPERTIES.getProperty("rpToken"));
     }
 
     public static String projectName() {

@@ -12,6 +12,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import rp.testing.ui.listeners.ReportPortalEventListener;
+import rp.testing.utils.TestConfiguration;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -34,6 +35,9 @@ public enum BrowserFactory {
             LoggingPreferences logging = new LoggingPreferences();
             logging.enable(LogType.DRIVER, Level.ALL);
             ChromeOptions options = new ChromeOptions();
+            if (TestConfiguration.headless()) {
+                options.addArguments("--headless=new");
+            }
             options.addArguments(COMMON_OPTIONS)
                     .setPageLoadTimeout(TIMEOUT_30_S)
                     .setCapability(ChromeOptions.LOGGING_PREFS, logging);
