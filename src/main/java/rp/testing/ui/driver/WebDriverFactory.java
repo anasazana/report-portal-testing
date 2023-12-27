@@ -9,8 +9,6 @@ import rp.testing.utils.TestConfiguration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @UtilityClass
