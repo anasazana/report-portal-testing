@@ -9,11 +9,13 @@ import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
 import rp.testing.api.model.filter.UpdateUserFilterRQ;
+import rp.testing.utils.TestCase;
 
 @IncludeEngines("junit-jupiter")
 public class CreateFilterNewClientTest extends FilterNewClientBaseTest {
 
     @Test
+    @TestCase(id = "RP-24")
     @DisplayName("Create a filter with all required fields present, 200 status code should be returned")
     public void createNewFilterTest() {
         UpdateUserFilterRQ testFilter = FilterGenerator.generateTestFilter();
