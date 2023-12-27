@@ -9,6 +9,7 @@ pipeline {
         RP_TOKEN = credentials('rpToken')
         RP_API_KEY = credentials('rp.api.key')
         RP_CREDS = credentials('RP credentials')
+        SL_ACCESS_KEY = credentials('sauce.accessKey')
     }
 
     stages {
@@ -23,7 +24,7 @@ pipeline {
         stage('Test') {
               steps {
                    script {
-                        sh "mvn test -DrpToken=$RP_TOKEN -Drp.api.key=$RP_API_KEY -DrpUsername=$RP_CREDS_USR -DrpPassword=$RP_CREDS_PSW"
+                        sh "mvn test -DrpToken=$RP_TOKEN -Drp.api.key=$RP_API_KEY -DrpUsername=$RP_CREDS_USR -DrpPassword=$RP_CREDS_PSW -Dsauce.accessKey=$SL_ACCESS_KEY"
                    }
               }
         }

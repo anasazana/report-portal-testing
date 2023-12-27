@@ -65,6 +65,30 @@ public class TestConfiguration {
         return PROPERTIES.getProperty("gridUrl");
     }
 
+    public static String saucelabsUrl() {
+        return PROPERTIES.getProperty("saucelabsUrl");
+    }
+
+    public static String saucelabsAccessKey() {
+        return System.getProperty("sauce.accessKey", PROPERTIES.getProperty("sauce.accessKey"));
+    }
+
+    public static Object saucelabUsername() {
+        return PROPERTIES.getProperty("sauce.username");
+    }
+
+    public static Object saucelabsBuild() {
+        return PROPERTIES.getProperty("sauce.build");
+    }
+
+    public static Object saucelabsTestName() {
+        return PROPERTIES.getProperty("sauce.name");
+    }
+
+    public static Object saucelabsTunnelName() {
+        return PROPERTIES.getProperty("sauce.tunnelName");
+    }
+
     public static TestRunMode runMode() {
         return TestRunMode.valueOf(PROPERTIES.getProperty("runMode").toUpperCase());
     }
