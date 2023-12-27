@@ -9,6 +9,8 @@ import rp.testing.utils.TestConfiguration;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @UtilityClass
@@ -24,6 +26,9 @@ public class WebDriverFactory {
             case REMOTE:
                 webdriver = createRemoteInstance(BrowserFactory.valueOf(browserName).getOptions());
                 break;
+            case SAUCELABS:
+                webdriver = createSauceLabsInstance(BrowserFactory.valueOf(browserName).getOptions());
+                break;
             default:
                 log.error("Wrong run mode! Available: LOCAL, REMOTE");
         }
@@ -35,6 +40,26 @@ public class WebDriverFactory {
         RemoteWebDriver remoteWebDriver = null;
         try {
             remoteWebDriver = new RemoteWebDriver(new URL(TestConfiguration.gridUrl()), capability);
+        } catch (MalformedURLException e) {
+            log.error("Grid URL is invalid or Grid is not available");
+            log.error(String.format("Browser: %s", capability.getBrowserName()), e);
+        } catch (IllegalArgumentException e) {
+            log.error(String.format("Browser %s is not valid or recognized", capability.getBrowserName()), e);
+        }
+
+        return remoteWebDriver;
+    }
+
+    private static RemoteWebDriver createSauceLabsInstance(MutableCapabilities capability) {
+        RemoteWebDriver remoteWebDriver = null;
+        try {
+            Map<String, Object> sauceOptions = new HashMap<>();
+            sauceOptions.put("username", TestConfiguration.saucelabUsername());
+            sauceOptions.put("accessKey", TestConfiguration.saucelabsAccessKey());
+            sauceOptions.put("build", TestConfiguration.saucelabsBuild());
+            sauceOptions.put("name", TestConfiguration.saucelabsTestName());
+            capability.setCapability("sauce:options", sauceOptions);
+            remoteWebDriver = new RemoteWebDriver(new URL(TestConfiguration.saucelabsUrl()), capability);
         } catch (MalformedURLException e) {
             log.error("Grid URL is invalid or Grid is not available");
             log.error(String.format("Browser: %s", capability.getBrowserName()), e);

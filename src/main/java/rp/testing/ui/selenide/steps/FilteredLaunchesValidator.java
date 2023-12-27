@@ -33,6 +33,8 @@ public class FilteredLaunchesValidator {
                 case GREATER_THAN_OR_EQUAL:
                     isCorrectNumber = filteredLaunchNumber >= number;
                     break;
+                default:
+                    break;
             }
             softly.assertThat(isCorrectNumber)
                     .as(String.format("Expected launch number: %s %d. Launch number found: %s",
