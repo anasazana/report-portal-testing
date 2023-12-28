@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.IncludeEngines;
 import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
-import rp.testing.utils.AlmLink;
+import rp.testing.listeners.AlmLink;
 
 import static rp.testing.utils.TestConfiguration.projectName;
 

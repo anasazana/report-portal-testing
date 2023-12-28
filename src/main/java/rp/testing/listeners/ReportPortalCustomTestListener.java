@@ -1,4 +1,4 @@
-package rp.testing.utils;
+package rp.testing.listeners;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -11,6 +11,7 @@ import org.junit.platform.engine.TestSource;
 import org.junit.platform.engine.support.descriptor.MethodSource;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
+import rp.testing.utils.TestConfiguration;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -20,15 +21,17 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 public class ReportPortalCustomTestListener implements TestExecutionListener {
 
+    @Override
     public void executionStarted(TestIdentifier testIdentifier) {
-        String testCase = getTestCase(testIdentifier);
+        String testCase = getAlmLink(testIdentifier);
         if (testCase != null) {
             updateTestCaseStatus(testCase, TestCaseStatus.PROCESSING);
         }
     }
 
+    @Override
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
-        String testCase = getTestCase(testIdentifier);
+        String testCase = getAlmLink(testIdentifier);
         if (testCase != null) {
             updateTestCaseStatus(
                     testCase,
@@ -39,7 +42,7 @@ public class ReportPortalCustomTestListener implements TestExecutionListener {
         }
     }
 
-    private static String getTestCase(TestIdentifier testIdentifier) {
+    private static String getAlmLink(TestIdentifier testIdentifier) {
         TestSource testSource = testIdentifier.getSource().orElse(null);
         if (testSource instanceof MethodSource) {
             return Optional.ofNullable(((MethodSource) testSource).getJavaMethod())

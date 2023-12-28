@@ -9,7 +9,7 @@ import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
 import rp.testing.api.model.filter.UpdateUserFilterRQ;
-import rp.testing.utils.AlmLink;
+import rp.testing.listeners.AlmLink;
 
 @IncludeEngines("junit-jupiter")
 public class CreateFilterNewClientTest extends FilterNewClientBaseTest {

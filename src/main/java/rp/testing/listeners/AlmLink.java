@@ -1,4 +1,4 @@
-package rp.testing.utils;
+package rp.testing.listeners;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
