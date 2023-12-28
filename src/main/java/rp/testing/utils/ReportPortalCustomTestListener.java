@@ -16,7 +16,10 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
 
-public class CustomTestListener implements TestExecutionListener {
+import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+
+public class ReportPortalCustomTestListener implements TestExecutionListener {
+
     public void executionStarted(TestIdentifier testIdentifier) {
         String testCase = getTestCase(testIdentifier);
         if (testCase != null) {
@@ -40,8 +43,8 @@ public class CustomTestListener implements TestExecutionListener {
         TestSource testSource = testIdentifier.getSource().orElse(null);
         if (testSource instanceof MethodSource) {
             return Optional.ofNullable(((MethodSource) testSource).getJavaMethod())
-                    .map(method -> method.getAnnotation(TestCase.class))
-                    .map(TestCase::id)
+                    .map(method -> method.getAnnotation(AlmLink.class))
+                    .map(AlmLink::id)
                     .orElse(null);
         }
         return null;
@@ -49,17 +52,11 @@ public class CustomTestListener implements TestExecutionListener {
 
     private void updateTestCaseStatus(String testCase, TestCaseStatus testCaseStatus) {
         try (CloseableHttpClient httpClient = HttpClients.custom().build()) {
-            String jiraHost = "localhost:8083";
             RequestBuilder request = RequestBuilder
-                    .post(String.format("http://%s/rest/api/2/issue/%s/transitions", jiraHost, testCase))
+                    .post(String.format("%s/rest/api/2/issue/%s/transitions", TestConfiguration.jiraUrl(), testCase))
                     .setEntity(new StringEntity("{\"transition\":{\"id\":\"" + testCaseStatus.getId() + "\"}}"))
-                    .setHeader(HttpHeaders.CONTENT_TYPE, "application/json")
-                    .setHeader(
-                            HttpHeaders.AUTHORIZATION, getBasicAuthenticationHeader(
-                                    "admin",
-                                    "admin"
-                            )
-                    );
+                    .setHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.getMimeType())
+                    .setHeader(HttpHeaders.AUTHORIZATION, getJiraBasicAuthenticationHeader());
             try (CloseableHttpResponse closeableHttpResponse = httpClient.execute(request.build())) {
                 closeableHttpResponse.getEntity();
             }
@@ -68,8 +65,8 @@ public class CustomTestListener implements TestExecutionListener {
         }
     }
 
-    private static String getBasicAuthenticationHeader(String username, String password) {
-        String valueToEncode = username + ":" + password;
+    private static String getJiraBasicAuthenticationHeader() {
+        String valueToEncode = TestConfiguration.jiraUsername() + ":" + TestConfiguration.jiraPassword();
         return "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
     }
 }

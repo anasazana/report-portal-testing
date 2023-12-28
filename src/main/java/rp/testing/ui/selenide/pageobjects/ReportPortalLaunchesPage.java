@@ -68,9 +68,11 @@ public class ReportPortalLaunchesPage extends ReportPortalPageObject {
     }
 
     public ReportPortalLaunchesPage cloneFilter(String filterName) {
-        SelenideElement filter = getDisplayedFilters().stream().filter(f ->
-            f.find(displayedFilterName).getText().equals(filterName)
-        ).findFirst().get();
+        SelenideElement filter = getDisplayedFilters().stream()
+                .filter(f -> f.find(displayedFilterName).getText().equals(filterName))
+                .findFirst().orElseThrow(() ->
+                        new NoSuchElementException("Filter not found: " + filterName)
+                );
         filter.shouldBe(visible).click();
         $(cloneFilter).shouldBe(visible).click();
         return this;
@@ -101,7 +103,9 @@ public class ReportPortalLaunchesPage extends ReportPortalPageObject {
                         .findElement(selectedParameterNameLabel)
                         .getText()
                         .equals(FilterParameter.LAUNCH_NUMBER)
-                ).findFirst().get();
+                ).findFirst().orElseThrow(() ->
+                        new NoSuchElementException("Parameter not found: " + FilterParameter.LAUNCH_NUMBER)
+                );
 
         launchNumberFilter.find(selectedParameterConditionToggle).shouldBe(visible, TIMEOUT_30_S).click();
         launchNumberFilter.find(byText(condition.getDropdownName())).click();

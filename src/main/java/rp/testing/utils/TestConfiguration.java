@@ -62,11 +62,11 @@ public class TestConfiguration {
     }
 
     public static String gridUrl() {
-        return PROPERTIES.getProperty("gridUrl");
+        return PROPERTIES.getProperty("grid.url");
     }
 
     public static String saucelabsUrl() {
-        return PROPERTIES.getProperty("saucelabsUrl");
+        return PROPERTIES.getProperty("sauce.url");
     }
 
     public static String saucelabsAccessKey() {
@@ -87,6 +87,18 @@ public class TestConfiguration {
 
     public static Object saucelabsTunnelName() {
         return PROPERTIES.getProperty("sauce.tunnelName");
+    }
+
+    public static Object jiraUrl() {
+        return PROPERTIES.getProperty("jira.url");
+    }
+
+    public static Object jiraUsername() {
+        return PROPERTIES.getProperty("jira.username");
+    }
+
+    public static Object jiraPassword() {
+        return PROPERTIES.getProperty("jira.password");
     }
 
     public static TestRunMode runMode() {
