@@ -1,11 +1,13 @@
 package rp.testing.utils;
 
+import lombok.experimental.UtilityClass;
 import rp.testing.ui.constants.TestRunMode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@UtilityClass
 public class TestConfiguration {
 
     private static final Properties PROPERTIES;
@@ -29,15 +31,15 @@ public class TestConfiguration {
     }
 
     public static String username() {
-        return PROPERTIES.getProperty("rpUsername");
+        return System.getProperty("rpUsername", PROPERTIES.getProperty("rpUsername"));
     }
 
     public static String password() {
-        return PROPERTIES.getProperty("rpPassword");
+        return System.getProperty("rpPassword", PROPERTIES.getProperty("rpPassword"));
     }
 
     public static String token() {
-        return PROPERTIES.getProperty("rpToken");
+        return System.getProperty("rpToken", PROPERTIES.getProperty("rpToken"));
     }
 
     public static String projectName() {
@@ -60,11 +62,47 @@ public class TestConfiguration {
     }
 
     public static String gridUrl() {
-        return PROPERTIES.getProperty("gridUrl");
+        return PROPERTIES.getProperty("grid.url");
+    }
+
+    public static String saucelabsUrl() {
+        return PROPERTIES.getProperty("sauce.url");
+    }
+
+    public static String saucelabsAccessKey() {
+        return System.getProperty("sauce.accessKey", PROPERTIES.getProperty("sauce.accessKey"));
+    }
+
+    public static Object saucelabUsername() {
+        return PROPERTIES.getProperty("sauce.username");
+    }
+
+    public static Object saucelabsBuild() {
+        return PROPERTIES.getProperty("sauce.build");
+    }
+
+    public static Object saucelabsTestName() {
+        return PROPERTIES.getProperty("sauce.name");
+    }
+
+    public static Object saucelabsTunnelName() {
+        return PROPERTIES.getProperty("sauce.tunnelName");
+    }
+
+    public static Object jiraUrl() {
+        return PROPERTIES.getProperty("jira.url");
+    }
+
+    public static Object jiraUsername() {
+        return System.getProperty("jira.username", PROPERTIES.getProperty("jira.username"));
+    }
+
+    public static Object jiraPassword() {
+        return System.getProperty("jira.password", PROPERTIES.getProperty("jira.password"));
     }
 
     public static TestRunMode runMode() {
-        return TestRunMode.valueOf(PROPERTIES.getProperty("runMode").toUpperCase());
+        return TestRunMode.valueOf(System.getProperty("runMode", PROPERTIES.getProperty("runMode").toUpperCase()));
     }
 
     public static boolean headless() {

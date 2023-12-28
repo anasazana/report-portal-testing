@@ -60,8 +60,8 @@ public class CreateFilterTest extends FilterBaseTest {
                 .validateStatusCode(HttpStatus.SC_BAD_REQUEST)
                 .getBodyAsObject(OperationCompletionRS.class);
 
-        Assertions.assertEquals(response.getErrorCode(), 4001);
-        Assertions.assertEquals(response.getMessage(), "Incorrect Request. [Field 'name' should not be null.] ");
+        Assertions.assertEquals(4001, response.getErrorCode());
+        Assertions.assertEquals("Incorrect Request. [Field 'name' should not be null.] ", response.getMessage());
     }
 
 }
