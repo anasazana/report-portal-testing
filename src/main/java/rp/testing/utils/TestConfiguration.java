@@ -94,11 +94,11 @@ public class TestConfiguration {
     }
 
     public static Object jiraUsername() {
-        return PROPERTIES.getProperty("jira.username");
+        return System.getProperty("jira.username", PROPERTIES.getProperty("jira.username"));
     }
 
     public static Object jiraPassword() {
-        return PROPERTIES.getProperty("jira.password");
+        return System.getProperty("jira.password", PROPERTIES.getProperty("jira.password"));
     }
 
     public static TestRunMode runMode() {
