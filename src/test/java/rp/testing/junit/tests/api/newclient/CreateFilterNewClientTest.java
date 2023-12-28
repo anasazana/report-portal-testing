@@ -31,6 +31,7 @@ public class CreateFilterNewClientTest extends FilterNewClientBaseTest {
     }
 
     @Test
+    @AlmLink(id = "RP-25")
     @DisplayName("Create a filter with ID, ID from the request should be ignored, filter should be created with automatically generated ID")
     public void createFilterProvidedIDShouldBeIgnoredTest() {
         UpdateUserFilterRQ testFilter = FilterGenerator.generateTestFilter();
@@ -53,6 +54,7 @@ public class CreateFilterNewClientTest extends FilterNewClientBaseTest {
     }
 
     @Test
+    @AlmLink(id = "RP-26")
     @DisplayName("Create a filter with missing required fields, 400 status code should be returned")
     public void createFilterMissingRequiredFieldTest() {
         UpdateUserFilterRQ testFilter = FilterGenerator.generateTestFilter();

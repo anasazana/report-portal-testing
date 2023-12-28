@@ -8,6 +8,7 @@ import org.junit.platform.suite.api.IncludeEngines;
 import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
+import rp.testing.utils.AlmLink;
 
 import static rp.testing.utils.TestConfiguration.projectName;
 
@@ -15,6 +16,7 @@ import static rp.testing.utils.TestConfiguration.projectName;
 public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
 
     @Test
+    @AlmLink(id = "RP-27")
     @DisplayName("Delete an existing filter, 200 status code should be returned")
     public void deleteExistingFilterTest() {
         EntryCreatedRS responseBody = client.createFilter(FilterGenerator.generateTestFilter())
@@ -36,6 +38,7 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
     }
 
     @Test
+    @AlmLink(id = "RP-28")
     @DisplayName("Delete a non-existent filter, 404 status code should be returned")
     public void getNonExistentFilterTest() {
         String nonExistentId = "99999";
