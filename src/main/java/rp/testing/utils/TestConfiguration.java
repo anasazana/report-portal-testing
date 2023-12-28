@@ -102,7 +102,7 @@ public class TestConfiguration {
     }
 
     public static TestRunMode runMode() {
-        return TestRunMode.valueOf(PROPERTIES.getProperty("runMode").toUpperCase());
+        return TestRunMode.valueOf(System.getProperty("runMode", PROPERTIES.getProperty("runMode").toUpperCase()));
     }
 
     public static boolean headless() {
