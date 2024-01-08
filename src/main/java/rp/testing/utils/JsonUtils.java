@@ -13,17 +13,18 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@UtilityClass
 @Slf4j
+@UtilityClass
 public class JsonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private static final String ERROR_MESSAGE_TO_JSON = "An error occurred while turning to JSON string:\n";
 
     public static String asPrettyJsonString(Object object) {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("An error occurred while turning to JSON string:\n" + e.getMessage());
+            throw new RuntimeException(ERROR_MESSAGE_TO_JSON + e.getMessage());
         }
     }
 
@@ -31,7 +32,7 @@ public class JsonUtils {
         try {
             return asPrettyJsonString(EntityUtils.toString(httpEntity));
         } catch (IOException e) {
-            throw new RuntimeException("An error occurred while turning to JSON string:\n" + e.getMessage());
+            throw new RuntimeException(ERROR_MESSAGE_TO_JSON + e.getMessage());
         }
     }
 
@@ -40,7 +41,7 @@ public class JsonUtils {
             JsonNode jsonNode = OBJECT_MAPPER.readTree(uglyJson);
             return OBJECT_MAPPER.writeValueAsString(jsonNode);
         } catch (IOException e) {
-            throw new RuntimeException("An error occurred while turning to JSON string:\n" + e.getMessage());
+            throw new RuntimeException(ERROR_MESSAGE_TO_JSON + e.getMessage());
         }
     }
 
