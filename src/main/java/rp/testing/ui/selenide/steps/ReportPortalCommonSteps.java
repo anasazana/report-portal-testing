@@ -1,5 +1,6 @@
 package rp.testing.ui.selenide.steps;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import rp.testing.ui.selenide.pageobjects.ReportPortalLoginPage;
@@ -9,6 +10,7 @@ import static rp.testing.utils.TestConfiguration.password;
 import static rp.testing.utils.TestConfiguration.username;
 
 @Slf4j
+@UtilityClass
 public class ReportPortalCommonSteps {
 
     public static void login(WebDriver driver) {

@@ -47,10 +47,11 @@ public class GetFilterNewClientTest extends FilterNewClientBaseTest {
                 .validateStatusCode(HttpStatus.SC_NOT_FOUND)
                 .getBodyAsObject(OperationCompletionRS.class);
 
-        Assertions.assertEquals(response.getErrorCode(), 40421);
-        Assertions.assertEquals(response.getMessage(), String.format(
+        Assertions.assertEquals(40421, response.getErrorCode());
+        Assertions.assertEquals(String.format(
                 "User filter with ID '%s' not found on project '%s'. Did you use correct User Filter ID?",
-                nonExistentId, projectName())
+                nonExistentId, projectName()),
+                response.getMessage()
         );
     }
 

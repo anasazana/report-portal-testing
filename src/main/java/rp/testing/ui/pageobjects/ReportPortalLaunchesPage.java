@@ -15,6 +15,7 @@ import rp.testing.utils.WaiterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ReportPortalLaunchesPage extends ReportPortalBasePage {
 
@@ -71,7 +72,9 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
                             .findElement(By.className("inputCheckbox__children-container--R83YO"))
                             .getText()
                             .equals(filterParameterName)
-                    ).findFirst().get();
+                    ).findFirst().orElseThrow(() ->
+                            new NoSuchElementException("Parameter not found: " + filterParameterName)
+                    );
             parameterToSelect.click();
             WaiterUtils.pause();
         }
@@ -87,7 +90,9 @@ public class ReportPortalLaunchesPage extends ReportPortalBasePage {
                         .findElement(selectedParameterNameLabel)
                         .getText()
                         .equals(FilterParameter.LAUNCH_NUMBER)
-                ).findFirst().get();
+                ).findFirst().orElseThrow(() ->
+                        new NoSuchElementException("Parameter not found: " + FilterParameter.LAUNCH_NUMBER)
+                );
         WaiterUtils.pause();
 
         launchNumberFilter.findElement(selectedParameterConditionToggle).click();

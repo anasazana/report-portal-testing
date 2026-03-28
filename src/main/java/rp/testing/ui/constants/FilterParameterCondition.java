@@ -1,7 +1,10 @@
 package rp.testing.ui.constants;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum FilterParameterCondition {
 
     CONTAINS("cnt", "Contains"),
@@ -23,18 +26,10 @@ public enum FilterParameterCondition {
         this.dropdownName = dropdownName;
     }
 
-    public String getSelectedName() {
-        return selectedName;
-    }
-
-    public String getDropdownName() {
-        return dropdownName;
-    }
-
     public static FilterParameterCondition getByName(String conditionName) {
         return Arrays.stream(FilterParameterCondition.values())
                 .filter(condition -> condition.getDropdownName().equalsIgnoreCase(conditionName))
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 
 }

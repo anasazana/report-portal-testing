@@ -1,5 +1,6 @@
 package rp.testing.api.datagenerator;
 
+import lombok.experimental.UtilityClass;
 import rp.testing.api.model.filter.Order;
 import rp.testing.api.model.filter.UpdateUserFilterRQ;
 import rp.testing.api.model.filter.UserFilterCondition;
@@ -12,6 +13,7 @@ import static rp.testing.api.model.filter.enums.FilteringField.DESCRIPTION;
 import static rp.testing.api.model.filter.enums.FilteringField.LAUNCH_NAME;
 import static rp.testing.ui.constants.FilterParameterCondition.CONTAINS;
 
+@UtilityClass
 public class FilterGenerator {
 
     private static final Random RANDOM = new Random();

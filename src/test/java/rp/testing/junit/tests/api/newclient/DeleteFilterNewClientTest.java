@@ -8,6 +8,7 @@ import org.junit.platform.suite.api.IncludeEngines;
 import rp.testing.api.datagenerator.FilterGenerator;
 import rp.testing.api.model.OperationCompletionRS;
 import rp.testing.api.model.filter.EntryCreatedRS;
+import rp.testing.listeners.AlmLink;
 
 import static rp.testing.utils.TestConfiguration.projectName;
 
@@ -15,6 +16,7 @@ import static rp.testing.utils.TestConfiguration.projectName;
 public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
 
     @Test
+    @AlmLink(id = "RP-27")
     @DisplayName("Delete an existing filter, 200 status code should be returned")
     public void deleteExistingFilterTest() {
         EntryCreatedRS responseBody = client.createFilter(FilterGenerator.generateTestFilter())
@@ -26,8 +28,9 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
         OperationCompletionRS response = client.deleteFilterById(responseBody.getId())
                 .validateStatusCode(HttpStatus.SC_OK)
                 .getBodyAsObject(OperationCompletionRS.class);
-        Assertions.assertEquals(response.getMessage(),
-                String.format("User filter with ID = '%s' successfully deleted.", responseBody.getId())
+        Assertions.assertEquals(
+                String.format("User filter with ID = '%s' successfully deleted.", responseBody.getId()),
+                response.getMessage()
         );
 
         client.getFilterById(responseBody.getId())
@@ -35,6 +38,7 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
     }
 
     @Test
+    @AlmLink(id = "RP-28")
     @DisplayName("Delete a non-existent filter, 404 status code should be returned")
     public void getNonExistentFilterTest() {
         String nonExistentId = "99999";
@@ -45,10 +49,11 @@ public class DeleteFilterNewClientTest extends FilterNewClientBaseTest {
                 .validateStatusCode(HttpStatus.SC_NOT_FOUND)
                 .getBodyAsObject(OperationCompletionRS.class);
 
-        Assertions.assertEquals(response.getErrorCode(), 40421);
-        Assertions.assertEquals(response.getMessage(), String.format(
+        Assertions.assertEquals(40421, response.getErrorCode());
+        Assertions.assertEquals(String.format(
                 "User filter with ID '%s' not found on project '%s'. Did you use correct User Filter ID?",
-                nonExistentId, projectName())
+                nonExistentId, projectName()),
+                response.getMessage()
         );
     }
 
